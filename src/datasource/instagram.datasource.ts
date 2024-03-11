@@ -1,13 +1,14 @@
 import { baseUrl, accessToken, instagramId, facebookId } from "./constants.ts";
-import { PostContainerInput } from "./dtos/intagram.dto.ts";
+import { BasicInfoDto, BasicPostResponseDto } from "./dtos/intagram.dto.ts";
+import { Datasource } from "./datasource.interface.ts";
 import {
-  BasicInfoDto,
-  BasicPostResponseDto,
+  BasicInfo,
   CreateContainerInput,
-} from "./dtos/intagram.dto.ts";
+  PostContainerInput,
+} from "../usecases/models.ts";
 
-export class InstagramDatasource {
-  public async getBasicInfo(): Promise<BasicInfoDto> {
+export class InstagramDatasource implements Datasource {
+  public async getBasicInfo(): Promise<BasicInfo> {
     const url = new URL(`/${facebookId}`, baseUrl);
 
     url.searchParams.append(
@@ -16,11 +17,18 @@ export class InstagramDatasource {
     );
     url.searchParams.append("access_token", accessToken);
 
-    const response = await fetch(url, {
-      method: "GET",
-    });
+    const response: BasicInfoDto = await (
+      await fetch(url, {
+        method: "GET",
+      })
+    ).json();
 
-    return response.json();
+    return {
+      accessToken: response.access_token,
+      facebookId: response.id,
+      instagramId: response.connected_instagram_account.id,
+      name: response.name,
+    };
   }
 
   public async createContainer(

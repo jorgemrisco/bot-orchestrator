@@ -8,14 +8,3 @@ export interface BasicInfoDto {
 export interface BasicPostResponseDto {
   id: string;
 }
-
-export interface CreateContainerInput {
-  mediaType: "STORIES" | "REELS" | "CAROUSEL"; //Required for carousels, stories, and reels.
-  caption?: string;
-  shareToFeed?: boolean; // for reels only
-  mediaUrl: URL;
-}
-
-export interface PostContainerInput {
-  creationId: string;
-}
