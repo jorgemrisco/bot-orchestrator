@@ -39,11 +39,8 @@ export class InstagramDatasource implements Datasource {
 
     url.searchParams.append("image_url", input.mediaUrl.toString());
     url.searchParams.append("media_type", input.mediaType);
-    url.searchParams.append("access_token", accessToken);
 
-    if (input.mediaType === "STORIES" && input.shareToFeed) {
-      url.searchParams.append("share_to_feed", String(input.shareToFeed));
-    }
+    url.searchParams.append("access_token", accessToken);
 
     const response = await fetch(url, { method: "POST" });
 
@@ -56,7 +53,7 @@ export class InstagramDatasource implements Datasource {
     const url = new URL(`/${instagramId}`, baseUrl);
     url.pathname += "/media_publish";
 
-    url.searchParams.append("creation_id", input.creationId);
+    url.searchParams.append("creation_id", input.creationId.toString());
     url.searchParams.append("access_token", accessToken);
 
     const response = await fetch(url, { method: "POST" });
