@@ -8,7 +8,7 @@ export interface BasicInfo {
 export type PostContentInput = CreateContainerInput;
 
 export interface CreateContainerInput {
-  mediaType: "STORIES" | "REELS" | "CAROUSEL"; //Required for carousels, stories, and reels.
+  mediaType: "STORIES" | "REELS" | "CAROUSEL" | null;
   caption?: string;
   shareToFeed?: boolean; // for reels only
   mediaUrl: URL;

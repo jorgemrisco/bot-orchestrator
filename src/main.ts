@@ -18,6 +18,10 @@ Deno.serve(async (request: Request) => {
     const usecase = new PostContent(datasource);
     const response = await usecase.execute(body);
 
+    if (body.shareToFeed) {
+      await usecase.execute({ ...body, mediaType: null });
+    }
+
     return new Response(JSON.stringify(response, null, 2));
   }
 

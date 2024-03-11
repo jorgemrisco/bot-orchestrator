@@ -38,7 +38,12 @@ export class InstagramDatasource implements Datasource {
     url.pathname += "/media";
 
     url.searchParams.append("image_url", input.mediaUrl.toString());
-    url.searchParams.append("media_type", input.mediaType);
+    if (input.mediaType) {
+      url.searchParams.append("media_type", input.mediaType);
+    }
+    if (input.caption) {
+      url.searchParams.append("caption", input.caption);
+    }
 
     url.searchParams.append("access_token", accessToken);
 
